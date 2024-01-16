@@ -1,10 +1,10 @@
 import numpy as np
-import pandas as import pd
+import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-%matplotlib inline
+#%matplotlib inline
 import warnings
-warning.filterwarnings('ignore')
+warnings.filterwarnings('ignore')
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -21,34 +21,39 @@ import seaborn as sns
 #get correlations of each features in dataset
 #correlation fxn it finds all of the features and how they are correlated in respect to the target output.
 corrmat = df.corr()
-top_corr_features = cormat.index
+top_corr_features = corrmat.index
 plt.figure(figsize=(20,20))
 #plot heat map
 g=sns.heatmap(df[top_corr_features].corr(), annot=True, cmap="RdYlGn")
 #histogram of to see each feature, how they are distributed. Find out if the dataset is balanced
 df.hist()
-array([[<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18BE4FD0>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18C12EF0>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18BDB2E8>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19D50550>],
-       [<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1959F7B8>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C190A4A20>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19427C88>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1949BF28>],
-       [<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1949BF60>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19224400>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A03F668>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18F138D0>],
-       [<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19505B38>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19577DA0>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A28A048>,
-        <matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A3B72B0>]],
-      dtype=object)
+#array([[<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18BE4FD0>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18C12EF0>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18BDB2E8>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19D50550>],
+       #[<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1959F7B8>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C190A4A20>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19427C88>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1949BF28>],
+       #[<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1949BF60>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19224400>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A03F668>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C18F138D0>],
+       #[<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19505B38>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C19577DA0>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A28A048>,
+        #<matplotlib.axes._subplots.AxesSubplot object at 0x0000017C1A3B72B0>]],
+      #dtype=object)
+# Plot histograms for each feature in the dataset
+plt.figure(figsize=(12, 10))  # Adjust the size of the figure as needed
+df.hist(bins=20, layout=(4, 4), edgecolor='black')  # Adjust the number of bins and layout
+plt.tight_layout()  # Adjust layout to fit the subplots neatly
+plt.show()  # Display the histograms
 
 #plot counterplot
 sns.set_style('whitegrid')
 sns.countplot(x='target',data=df,palette='RdBu_r')
-<matplotlib.axes._subplots.AxesSubplot at 0x17c1976120>
+#<matplotlib.axes._subplots.AxesSubplot at 0x17c1976120> removed because it is output not code
 
 #Data Processesing
 #Convert some categorical variables into dummy variables and scale all the values before training the ML models.
@@ -60,7 +65,7 @@ dataset = pd.get_dummies(df, columns = ['sex', 'cp', 'fbs', 'restecg', 'examg', 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 standardScaler = StandardScaler()
-columns_to_scale - ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+columns_to_scale = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
 dataset[columns_to_scale] = standardScaler.fit_transform(dataset[columns_to_scale])
 
 dataset.head()
